@@ -1,8 +1,13 @@
-# 스프링부트 블로그 프로젝트 V2
+# 스프링부트 블로그 프로젝트 V1
 
 ## 의존성
-- SpringWeb
-- ...
+- Spring Boot DevTools
+- Lombok
+- Spring Data JPA
+- MySQL Driver
+- Spring Security
+- OAuth2 Client
+- Spring Web
 
 ## DB 설정
 ```sql
