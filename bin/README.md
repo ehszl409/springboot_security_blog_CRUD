@@ -13,5 +13,5 @@
 ```sql
 	create user 'pos'@'%' identified by 'pos1234'; 
 	GRANT ALL PRIVILEGES ON *.* TO 'pos'@'%'; 
-	create database pos; 
+	create database cos; 
 ```
