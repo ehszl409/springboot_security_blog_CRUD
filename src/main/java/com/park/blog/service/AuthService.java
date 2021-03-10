@@ -20,6 +20,9 @@ public class AuthService {
 	
 	@Transactional
 	public void 회원가입(User user) {
+		System.out.println("회원가입 서비스 실행.");
+		// 회원가입시 암호화된 패스워드로 세팅을 해줘야지 시큐리티에서
+		// 회원가입을 동작하게 허락한다.
 		String rawPassword = user.getPassword();
 		String encPassword = bCryptPasswordEncoder.encode(rawPassword);
 		

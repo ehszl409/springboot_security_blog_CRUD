@@ -8,6 +8,9 @@
 - Spring Security
 - OAuth2 Client
 - Spring Web
+- Tomcat_jasper
+- JSTL
+- Spring_security_taglibs
 
 ## DB 설정
 ```sql
