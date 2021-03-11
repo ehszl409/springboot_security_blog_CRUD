@@ -1,11 +1,19 @@
 package com.park.blog.config;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 // AuthenticationFilter 
 // WebSecurityConfigurerAdapter를 사용하는 이유는 함수를 걸어준다. 
@@ -28,19 +36,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		System.out.println("시큐리티 필터 실행됨.");
-		http.csrf().disable(); // csrf토큰을 차단한다 // 가짜인지 진짜인지 확인한다.
+		http.csrf().disable(); // csrf토큰을 차단한다. 가짜인지 진짜인지 확인한다.
 		http.authorizeRequests()
 				// 막고 싶은 주소
 				// 403오류 발생 = Forbidden 접근 권한 없음.
 				// ROLE_은 시큐리티가 요구하는 필수 사항이므로 지켜야한다.
-				.antMatchers("/user", "/post").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-				.antMatchers("/admin").access("hasRole('ROLE_ADMIN')")
-				.anyRequest()
-				.permitAll()
+				.antMatchers("/user/**", "/post/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+				.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+				.anyRequest().permitAll()
 				.and()
 				.formLogin() // x-www-form-urlencoded 타입만 받는다. (json사용 불가)
-				.loginPage("/loginForm") // 위 주소가 요청되면 "/login"으로 자동으로 redirection
-				.loginProcessingUrl("/login"); // 위 주소로 요청되면 시큐리티가 낚아챈다.
+				.loginPage("/loginForm") // /user,/post,/admin 주소가 요청되면 "/loginForm"으로 자동으로 redirection
+				.loginProcessingUrl("/login") // 위 주소로 요청되면 시큐리티가 낚아챈다.
+//				.successHandler(new AuthenticationSuccessHandler() {
+//					
+//					@Override
+//					public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+//							Authentication authentication) throws IOException, ServletException {
+//						response.sendRedirect("/");
+//						
+//					}
+//				});
+				.defaultSuccessUrl("/");
+				
 	}
 
 }

@@ -1,5 +1,4 @@
-package com.park.blog.domain.user;
-
+package com.park.blog.domain.post;
 
 
 
@@ -7,13 +6,19 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.ManyToAny;
+
+import com.park.blog.domain.user.RoleType;
+import com.park.blog.domain.user.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,24 +30,25 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class User {
+public class Post {
 	@Id // primary key
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(nullable = false, length = 100, unique = true)
-	private String username;
-	
 	@Column(nullable = false, length = 100)
-	private String password;
+	private String title;
 	
-	@Column(nullable = false, length = 50)
-	private String email;
+	@Lob
+	private String content;
 	
-	@Enumerated(EnumType.STRING)
-	private RoleType role; // ADMIN, USER
+	// 조회수
+	@ColumnDefault("0")
+	private int count;
+	
+	@ManyToOne
+	@JoinColumn(name = "userId")
+	private User user;
 	
 	@CreationTimestamp
 	private Timestamp createDate;
-	
 }
