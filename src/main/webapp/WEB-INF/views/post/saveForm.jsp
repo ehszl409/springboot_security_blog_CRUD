@@ -6,15 +6,8 @@
 
 
 
-
-
-
-
-
-
-
 <div class="container">
-	<form action="/post" method="POST">
+	<form action="/post" method="post">
   <div class="form-group">
     <input type="text" class="form-control" placeholder="Enter Title" name="title">
   </div>

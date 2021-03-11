@@ -27,6 +27,7 @@ public class PrincipalDetailsService implements UserDetailsService {
 		if(principal == null) {
 			return null;
 		} else {
+			
 			// 리턴해주는 타입이 UserDetails를 상속받고 있다.
 			return new PrincipalDetails(principal);
 			

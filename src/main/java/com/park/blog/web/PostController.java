@@ -2,7 +2,9 @@ package com.park.blog.web;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -25,10 +27,10 @@ public class PostController {
 	
 	// 메인페이지 주소
 	@GetMapping("/")
-	public String findAll(Model model, @PageableDefault(sort = "id") Pageable pageable) {
-		List<Post> posts = postService.전체찾기();
-		// RequestDispatcher = Model
-		model.addAttribute("posts",posts);
+	public String findAll(Model model, @PageableDefault(sort = "id", direction = Sort.Direction.DESC, size = 3) Pageable pageable) {
+		Page<Post> posts = postService.전체찾기(pageable);
+     	// RequestDispatcher = Model
+     	model.addAttribute("posts",posts);
 		return "post/list";
 	}
 	
@@ -39,6 +41,7 @@ public class PostController {
 	
 	@PostMapping("/post")
 	public String save(PostSaveReqDto postSaveReqDto, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+		System.out.println("글쓰기 요청 진입.");
 		// 영속화 x
 		Post post = postSaveReqDto.toEntity();
 		// user을 넣어주지 않으면 DB에 userId가 null로 된다.
@@ -46,11 +49,12 @@ public class PostController {
 		
 		// 영속화 o
 		Post postEntity = postService.글쓰기(post);
+		System.out.println("postEntity : " + postEntity);
 		
 		if(postEntity == null) {
 			return "post/saveForm";
 		}else {
-			return "redirect:/post";
+			return "redirect:/";
 		}
 	}
 }
