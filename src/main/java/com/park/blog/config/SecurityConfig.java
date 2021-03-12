@@ -15,12 +15,19 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import com.park.blog.config.oauth.OAuth2DetailsService;
+
+import lombok.RequiredArgsConstructor;
+
 // AuthenticationFilter 
 // WebSecurityConfigurerAdapter를 사용하는 이유는 함수를 걸어준다. 
 // = 모든 함수를 오버라이딩 하지 않아도 된다.
+@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity // 시큐리티를 재정의 한다.
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	private final OAuth2DetailsService oAuth2DetailsService;
 
 	// 회원가입시 입력되는 패스워드는 필수적으로 암호화 해줘야한다.
 	// 암호화 해주고 어떤 방식으로 암호화했는지 시큐리티한테 알려줘야한다.
@@ -57,8 +64,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //						
 //					}
 //				});
-				.defaultSuccessUrl("/");
-				
+				.defaultSuccessUrl("/")
+				.and()
+				.oauth2Login()
+				.userInfoEndpoint()
+				.userService(oAuth2DetailsService);
 	}
 
 }

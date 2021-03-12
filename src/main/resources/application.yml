@@ -33,4 +33,9 @@ spring:
     serialization:
       fail-on-empty-beans: false
       
+#      해당 사이트에 우리 서버를 클라이언트 서버로 등록해줘야 한다   security:    oauth2:      client:        registration:          google:
+            client-id: 756759989505-3o4egq041a0492tku8hdgtkad327g0mj.apps.googleusercontent.com
+            client-secret: Mid7twMriNp3BdYESbi0gjnR
+            scope:            - email
+            - profile
   
