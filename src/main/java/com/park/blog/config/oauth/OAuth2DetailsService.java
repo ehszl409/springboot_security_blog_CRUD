@@ -21,7 +21,17 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
 			// DefaultOAuth2UserService을 상속해줘야지 loadUser를 사용할 수 있다.
 			// 이 코드의 목적은 토큰으로 OAuth서버에 사용자 정보를 요청하는 것.
 			OAuth2User oAuth2User = super.loadUser(userRequest);
+			
 			System.out.println("OAuth2User : " + oAuth2User.getAttributes());
-			return oAuth2User;
+			
+		
+			return processOAuth2User(userRequest, oAuth2User);
 		}
+	
+	// 구글 로그인 프로세스
+	private OAuth2User processOAuth2User(OAuth2UserRequest userRequest, OAuth2User oAuth2User){
+		// 1번 통합 클래스를 생성.
+		// = 서로 다른 소셜 로그인을 하면 getAttributes 내용이 다르다.
+		return null;
+	}
 }
