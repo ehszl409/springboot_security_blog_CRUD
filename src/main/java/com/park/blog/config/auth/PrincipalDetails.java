@@ -17,9 +17,10 @@ import lombok.Data;
 @Data
 public class PrincipalDetails implements UserDetails, OAuth2User {
 	private User user;
-	private Map<String, Object> attributes; // OAuth 제공자로 부터 받은 회원 정보.
-	
-	
+	// OAuth 제공자로 부터 받은 회원 정보.
+	private Map<String, Object> attributes;
+	// 소셜 로그인인지 확인하는 변수값.
+	private boolean isOAuth = false;
 
 	// 시큐리티의 UserDetails에 필수적인 정보를 넘겨줘야한다.
 	// 그래야지 시큐리티에서 UserDetails로 로그인과 회원가입을 관리해준다.
@@ -27,15 +28,17 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 		System.out.println("UserDetails 실행됨.");
 		this.user = user;
 	}
-	
-	// UserDetails에 attribute값도 정장해준다.
+
+	// 소셜 로그인을 위해 생성자를 오버로드 해서 attribute를 저장해준다.
+	// 
+	// UserDetails에 attribute값도 저장해준다.
 	public PrincipalDetails(User user, Map<String, Object> attribute) {
 		System.out.println("UserDetails attribute 실행됨.");
 		this.user = user;
 		this.attributes = attribute;
+		this.isOAuth = true;
 	}
 
-	
 	// 회원 정보를 출력하는 함수.
 	@Override
 	public Map<String, Object> getAttributes() {
@@ -60,6 +63,11 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 	public String getUsername() {
 		System.out.println("UserDetails에 유저네임이 설정됨.");
 		return user.getUsername();
+	}
+
+	// 소셜 로그인 여부.
+	public boolean isOAuth() {
+		return isOAuth;
 	}
 
 	// 계정의 만료 여부
@@ -92,7 +100,8 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 	// 사용자가 가지고 있는 권한은 무엇인지에 대해 시큐리티한테 알려줘야한다.
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-
+		System.out.println("롤 검증 중...");	
+		
 		// 권한을 넘겨주는 것이 목적이다.
 		Collection<GrantedAuthority> collectors = new ArrayList<>();
 		collectors.add(() -> "ROLE_" + user.getRole().toString());

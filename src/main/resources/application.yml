@@ -38,4 +38,18 @@ spring:
             client-secret: Mid7twMriNp3BdYESbi0gjnR
             scope:            - email
             - profile
+            
+          facebook:
+            client-id: 1140412109810595
+            client-secret: 3befa7c3bf10b305706581e8148e0080
+            scope:
+            - email
+            - public_profile
   
+          github:
+            client-id: a7219c560f54ec6d25fc
+            client-secret: fdbe414e89d7da72d4def0d4e0568223c26f6cdf 
+            scope:
+            - user
+            
+           
