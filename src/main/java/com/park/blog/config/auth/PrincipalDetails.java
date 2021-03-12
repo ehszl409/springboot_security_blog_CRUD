@@ -18,12 +18,21 @@ import lombok.Data;
 public class PrincipalDetails implements UserDetails, OAuth2User {
 	private User user;
 	private Map<String, Object> attributes; // OAuth 제공자로 부터 받은 회원 정보.
+	
+	
 
 	// 시큐리티의 UserDetails에 필수적인 정보를 넘겨줘야한다.
 	// 그래야지 시큐리티에서 UserDetails로 로그인과 회원가입을 관리해준다.
 	public PrincipalDetails(User user) {
 		System.out.println("UserDetails 실행됨.");
 		this.user = user;
+	}
+	
+	// UserDetails에 attribute값도 정장해준다.
+	public PrincipalDetails(User user, Map<String, Object> attribute) {
+		System.out.println("UserDetails attribute 실행됨.");
+		this.user = user;
+		this.attributes = attribute;
 	}
 
 	
