@@ -74,7 +74,7 @@ spring:
             authorization-grant-type: authorization_code
             redirect-uri: http://localhost:8080/login/oauth2/code/kakao
             client-name: Kakao
-            #
+            # 카카오톡 로그인 
             client-authentication-method: POST
             
                     provider:
