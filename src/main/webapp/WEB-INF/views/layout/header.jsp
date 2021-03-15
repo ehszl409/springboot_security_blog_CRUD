@@ -43,7 +43,7 @@
 				<div class="collapse navbar-collapse" id="collapsibleNavbar">
 					<ul class="navbar-nav">
 						<li class="nav-item"><a class="nav-link" href="/post/saveForm">글쓰기</a></li>
-						<li class="nav-item"><a class="nav-link" href="/user/1">회원정보</a></li>
+						<li class="nav-item"><a class="nav-link" href="/user/${principal.user.id}">회원정보</a></li>
 						<li class="nav-item"><a class="nav-link" href="/logout">로그아웃</a></li>
 					</ul>
 				</div>

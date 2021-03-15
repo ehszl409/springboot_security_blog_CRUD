@@ -1,5 +1,6 @@
 package com.park.blog.config.oauth;
 
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,6 +12,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import com.park.blog.config.auth.PrincipalDetails;
+import com.park.blog.domain.user.RoleType;
 import com.park.blog.domain.user.User;
 import com.park.blog.domain.user.UserRepository;
 
@@ -71,6 +73,10 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
 			oAuth2UserInfo = new FacebookInfo(oAuth2User.getAttributes());			
 		} else if(userRequest.getClientRegistration().getClientName().equals("GitHub")) {
 			oAuth2UserInfo = new GithubInfo(oAuth2User.getAttributes());			
+		} else if(userRequest.getClientRegistration().getClientName().equals("Naver")) {
+			oAuth2UserInfo = new NaverInfo((Map)(oAuth2User.getAttributes().get("response")));			
+		} else if(userRequest.getClientRegistration().getClientName().equals("Kakao")) {
+			oAuth2UserInfo = new KakaoInfo(oAuth2User.getAttributes());			
 		}
 		
 		//2. 최초 로그인 : 회원가입 + 로그인 / 기존 회원 : 로그인 
@@ -95,6 +101,7 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
 					 .username(oAuth2UserInfo.getUsername())
 					 .password(encPassword)
 					 .email(oAuth2UserInfo.getEmail())
+					 .role(RoleType.USER)
 					 .build();
 					 
 			 // 자동으로 회원가입 값을 저장 후 DB에 저장 해준다.

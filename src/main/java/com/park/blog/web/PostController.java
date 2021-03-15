@@ -33,10 +33,13 @@ public class PostController {
 			size = 3) Pageable pageable, 
 			@AuthenticationPrincipal PrincipalDetails principalDetails) {
 		
-		System.out.println("어떤 소셜로 로그인을 했을까?? (null이라면 소셜 로그인이 아닙니다.)");
-		System.out.println("0. isOAuth : " + principalDetails.isOAuth());
-		System.out.println("1. Attribute : " + principalDetails.getAttributes());
-		System.out.println("2. Username : " + principalDetails.getUser().getUsername());
+		/*
+		 * System.out.println("어떤 소셜로 로그인을 했을까?? (null이라면 소셜 로그인이 아닙니다.)");
+		 * System.out.println("0. isOAuth : " + principalDetails.isOAuth());
+		 * System.out.println("1. Attribute : " + principalDetails.getAttributes());
+		 * System.out.println("2. Username : " +
+		 * principalDetails.getUser().getUsername());
+		 */
 		
 		Page<Post> posts = postService.전체찾기(pageable);
      	// RequestDispatcher = Model
