@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				// 막고 싶은 주소
 				// 403오류 발생 = Forbidden 접근 권한 없음.
 				// ROLE_은 시큐리티가 요구하는 필수 사항이므로 지켜야한다.
-				.antMatchers("/user/**", "/post/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+				.antMatchers("/user/**", "/post/**", "/reply/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 				.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
 				.anyRequest().permitAll()
 				.and()

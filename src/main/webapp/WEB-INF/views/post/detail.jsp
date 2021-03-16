@@ -42,21 +42,50 @@
 	<div class="card">
 		<div class="card-header">댓글 리스트</div>
 		<ul id="reply-box" class="list-group">
-
-			<li id="reply-1" class="list-group-item d-flex justify-content-between">
-				<div>댓글 내용</div>
+		
+		<c:forEach var="reply" items="${post.replys}">
+			
+			<!-- 삭제를 위해 댓글의 Id를 명시해준다. -->
+			<li id="reply-${reply.id}" class="list-group-item d-flex justify-content-between">
+				<!-- LAYZ로딩 시작 이유는 getter가 호출되니까 (세션이 열려있음 open in view 모드에서만) -->
+				<div>${reply.content}</div> 
 				<div class="d-flex">
-					<div class="font-italic">작성자 : 작성자이름 &nbsp;</div>
-					<button onClick="index.replyDelete(${board.id}, ${reply.id})" class="badge">삭제</button>
+					<div class="font-italic">작성자 : ${reply.user.username}</div>
+					<button onClick="deleteReply(${reply.id})" class="badge">삭제</button>
 				</div>
 			</li>
+		</c:forEach>
+		
+		
 		</ul>
 	</div>
 	<!-- 댓글 끝 -->
 
-</div>
+</div> <!-- End of Container -->
 
 <script>
+	function deleteReply(id){
+			console.log(id);
+
+	$.ajax({
+			type:"DELETE",
+			url:"/reply/" + id,
+			dataType:"json"
+		}).done((res)=>{
+			console.log(res);
+			if(res.statusCode === 1){
+				alert("삭제에 성공하였습니다.");
+				$("reply-"+id).remove();
+			} else {
+				alert("삭제에 실패하였습니다.");
+				}
+		});
+
+		}
+</script>
+
+<script>
+	/* 리스너 방식. */
 	$("#btn-delete").on("click", (e)=>{
 		/* e에 담겨서 넘어오는 기능들 */
 		console.log(e.currentTarget);
