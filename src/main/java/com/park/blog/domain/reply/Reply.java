@@ -1,6 +1,4 @@
-package com.park.blog.domain.post;
-
-
+package com.park.blog.domain.reply;
 
 import java.sql.Timestamp;
 
@@ -11,16 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.ManyToAny;
 
-import com.park.blog.domain.reply.Reply;
-import com.park.blog.domain.user.RoleType;
+import com.park.blog.domain.post.Post;
 import com.park.blog.domain.user.User;
 
 import lombok.AllArgsConstructor;
@@ -33,29 +26,27 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Post {
+public class Reply {
 	@Id // primary key
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
-	@Column(nullable = false, length = 100)
-	private String title;
-	
-	@Lob
-	private String content;
-	
-	// 조회수
-	@ColumnDefault("0")
-	private int count;
-	
+
+	// 관계 : 댓글은 제일 자식 관계
+	// 유저와 게시물 둘다 연관관계가 필요하다.
 	// 연관 관계 부분 다시 보기.
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userId")
 	private User user;
-	
-//	@OneToMany(fetch = FetchType.LAZY)
-//	private Reply reply;
-	
+
+	// 연관 관계 부분 다시 보기.
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "postId")
+	private Post post;
+
+	@Column(nullable = false, length = 200)
+	private String content;
+
 	@CreationTimestamp
 	private Timestamp createDate;
+
 }

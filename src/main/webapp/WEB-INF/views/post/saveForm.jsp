@@ -13,10 +13,18 @@
   </div>
   
   <div class="form-group">
-    <textarea rows="" cols="5" class="form-control" name="content"></textarea>
+    <textarea rows="" cols="5" class="form-control" name="content" id="content"></textarea>
   </div>
   
   <button type="submit" class="btn btn-primary">글쓰기 완료</button>
 </form>
 </div>
+
+  <script>
+      $('#content').summernote({
+        tabsize: 2,
+        height: 300
+      });
+    </script>
+
 <%@ include file="../layout/footer.jsp" %>
