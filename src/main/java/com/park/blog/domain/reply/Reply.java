@@ -34,12 +34,12 @@ public class Reply {
 	// 관계 : 댓글은 제일 자식 관계
 	// 유저와 게시물 둘다 연관관계가 필요하다.
 	// 연관 관계 부분 다시 보기.
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "userId")
 	private User user;
 
 	// 연관 관계 부분 다시 보기.
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "postId")
 	private Post post;
 
