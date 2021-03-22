@@ -30,11 +30,59 @@
 	<div class="card">
 		<form>
 			<div class="card-body">
-				<textarea id="reply-content" class="form-control" rows="1"></textarea>
+				<textarea id="reply-content" name="content" class="form-control" rows="1"></textarea>
 			</div>
 			<div class="card-footer">
+				<input type="hidden" id="userId" value="${principal.user.id}" >
+				<input type="hidden" id="postId" value="${post.id}" >
 				<button type="button" id="btn-reply-save" class="btn btn-primary">등록</button>
 			</div>
+<script>
+	/* 리스너 방식. */
+	$("#btn-reply-save").on("click", (e)=>{
+
+		e.preventDefault();
+		
+	var text = $("#reply-content").val();
+	var userId = $("#userId").val();
+	var postId = $("#postId").val();
+	console.log("1. " + text);
+	console.log("2. " + userId); 
+	console.log("3. " + postId); 
+
+
+	let data = {
+			userId:$("#userId").val(),
+			postId:$("#postId").val(),
+			content:$("#reply-content").val()
+			}
+
+	/* JSON.stringify(data)이렇게 해주지 않으면 object로 log가 찍힌다. */
+	console.log("4. " + JSON.stringify(data));
+	
+	$.ajax({
+		type:"POST",
+		url:"/reply",
+		data:JSON.stringify(data),
+		contentType:"application/json; charset=utf-8",
+		dataType:"json"
+	}).done((res)=>{
+		console.log(res);
+		if(res.statusCode === 1){
+			alert("댓글달기에 성공하였습니다.");
+			location.reload();
+		} else {
+			alert("댓글달기에 실패하였습니다.");
+			location.reload();
+			}
+	}); 
+
+	
+	
+		
+	
+	})
+</script>
 		</form>
 	</div>
 	<br />
@@ -44,7 +92,6 @@
 		<ul id="reply-box" class="list-group">
 		
 		<c:forEach var="reply" items="${post.replys}">
-			
 			<!-- 삭제를 위해 댓글의 Id를 명시해준다. -->
 			<li id="reply-${reply.id}" class="list-group-item d-flex justify-content-between">
 				<!-- LAYZ로딩 시작 이유는 getter가 호출되니까 (세션이 열려있음 open in view 모드에서만) -->

@@ -70,7 +70,7 @@ public class Post {
 	//					함께 값을 select 하게 된다.
 	// cascade = CascadeType.REMOVE : 부모 관계 또는 이 참조값을 필드로 가지고 있는 객체를 삭제할 때 참조 변수값을 함께 삭제할 것인지
 	//									설정한다. REMOVE=삭제 PERSIST=유지.
-	@OneToMany(mappedBy = "post",  fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "post",  fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	
 	// 참조 변수 속 자신의 객체를 다시 호출하는 무한 맵핑이 되는 관계를 멈추는것.
 	@JsonIgnoreProperties({"post"})
