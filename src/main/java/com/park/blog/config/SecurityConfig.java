@@ -87,10 +87,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 				// form의 action값과 일치 시켜줘야한다.
 				// form의 값을 이용해서 로그인 처리하는 주소를 적어야한다.
+				// = x-www-form-urlencoded, 
+				//   시큐리티가 post로 온 /login 이라는 주소가 들어오면 낚아챔
 				.loginProcessingUrl("/login")
 
-				// 로그인에 성공하면 실행되는 주소 입니다.
-				.defaultSuccessUrl("/user")
+				
 //				.successHandler(new AuthenticationSuccessHandler() {
 //					
 //					@Override
@@ -100,6 +101,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //						
 //					}
 //				});
+				
+				// 위의 successHandler와 비슷하지만,
+				// 사용자가 갈려고 하는 페이지가 있을 때는 안 먹힘
 				.defaultSuccessUrl("/").and().oauth2Login().userInfoEndpoint().userService(oAuth2DetailsService);
 	}
 
