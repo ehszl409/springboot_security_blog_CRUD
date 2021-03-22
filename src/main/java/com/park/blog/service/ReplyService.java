@@ -24,7 +24,9 @@ public class ReplyService {
 		// RePly를 세팅해서 리턴해주기.
 		
 		// 익셉션 처리 해주기.
-		Post postEntity = postRepo.findById(replySaveReqDto.getPostId()).get();
+		Post postEntity = postRepo.findById(replySaveReqDto.getPostId()).orElseThrow(()->{
+			return new IllegalArgumentException("잘못된 ID입니다.");
+		});
 		
 		Reply reply = replySaveReqDto.toEntity();
 		reply.setUser(user);
@@ -37,7 +39,9 @@ public class ReplyService {
 	
 	@Transactional
 	public int 삭제하기(int id, int userId) {
-		Reply replyEntity = replyRepository.findById(id).get();
+		Reply replyEntity = replyRepository.findById(id).orElseThrow(()->{
+			return new IllegalArgumentException("잘못된 ID입니다.");
+		});
 		
 		if(replyEntity.getUser().getId() == userId) {
 			replyRepository.deleteById(id);

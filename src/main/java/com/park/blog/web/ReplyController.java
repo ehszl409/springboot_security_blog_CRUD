@@ -16,17 +16,6 @@ import com.park.blog.web.reply.ReplySaveReqDto;
 
 import lombok.RequiredArgsConstructor;
 
-/*
- * 해야하는것.
- * 1. 댓글쓰기 완료 (완)
- * 2. 디자인 변경.
- * 3. ControlAdvice Exception 처리 CMRespDto(-1)
- * 4. BindingResult 벨리데이션 체크 (보너스)
- * 5. 검색 (보너스)
- * */
-
-
-
 
 @RequiredArgsConstructor
 @RestController

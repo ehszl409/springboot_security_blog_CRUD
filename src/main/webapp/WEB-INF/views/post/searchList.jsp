@@ -23,13 +23,11 @@
 
 			</c:when>
 			<c:otherwise>
-
 				<li class="page-item"><a class="page-link" href="?page=${posts.number-1}">Previous</a></li>
 			</c:otherwise>
 		</c:choose>
 		<c:choose>
 			<c:when test="${posts.last}">
-
 				<li class="page-item disabled"><a class="page-link">Next</a></li>
 			</c:when>
 			<c:otherwise>

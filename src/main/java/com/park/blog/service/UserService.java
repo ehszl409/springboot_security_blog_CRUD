@@ -30,7 +30,9 @@ public class UserService {
 		// 1차 캐시란 처음 영속화된 객체가 저장되는 곳이고
 		// 2차 캐시란 1차 캐시에 저장된 객체에 변화가 생기면 변화된 값이 저장되는 곳이다.
 		// 더티 체킹이란 1차 캐시과 2차 캐시를 비교해서 값이 수정이 되었다면 DB에 Flush(Commit)시켜 버린다.
-		User userEntity = userRepository.findById(id).orElseThrow(()-> new RuntimeException());
+		User userEntity = userRepository.findById(id).orElseThrow(()->{
+			return new IllegalArgumentException("id를 찾을 수 없습니다.");
+		});
 		
 		String encPass = bCryptPasswordEncoder.encode(updateReqDto.getPassword());
 	

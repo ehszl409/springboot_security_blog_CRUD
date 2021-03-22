@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -102,5 +103,16 @@ public class PostController {
 		}else {
 			return "redirect:/";
 		}
+	}
+	
+	@GetMapping("/post/search")
+	public String search(Model model, String keyword,
+			@PageableDefault(sort = "id", direction = Sort.Direction.DESC, size = 3) Pageable pageable) {
+		System.out.println("검색 컨트롤러 확인.");
+		Page<Post> posts = postService.검색하기(keyword, pageable);
+		
+		model.addAttribute("posts", posts);
+		model.addAttribute("keyword", keyword);
+		return "post/searchList";
 	}
 }

@@ -31,7 +31,9 @@ public class PostService {
 	
 	@Transactional(readOnly = true)
 	public Post 상세보기(int id){
-		return postRepository.findById(id).get();
+		return postRepository.findById(id).orElseThrow(()->{
+			return new IllegalArgumentException("잘못된 ID입니다.");
+		});
 	}
 	
 	@Transactional
@@ -44,10 +46,16 @@ public class PostService {
 		// 전부 throw로 Exception을 타도록 해야 한다.
 		// 지금은 임시로 만들어 논것.
 		// 영속화
-		Post postEntity = postRepository.findById(id).get();
-		
+		Post postEntity = postRepository.findById(id).orElseThrow(()->{
+			return new IllegalArgumentException("잘못된 ID입니다.");
+		});
 		postEntity.setTitle(postSaveReqDto.getTitle());
 		postEntity.setContent(postSaveReqDto.getContent());
 		// 더티 체킹
+	}
+	
+	@Transactional(readOnly = true)
+	public Page<Post> 검색하기 (String keyword, Pageable pageable){
+		return postRepository.findByKeyword(keyword, pageable);
 	}
 }

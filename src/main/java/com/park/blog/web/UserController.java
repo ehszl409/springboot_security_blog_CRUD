@@ -44,7 +44,7 @@ public class UserController {
 	public @ResponseBody CMRespDto<?> update(@PathVariable int id, @RequestBody UserUpdateReqDto updateReqDto,
 			@AuthenticationPrincipal PrincipalDetails principalDetails) {
 		// 영속화
-		User userEntity = userService.회원수정(30, updateReqDto);
+		User userEntity = userService.회원수정(id, updateReqDto);
 		
 		// 세션을 변경하기 위해 UserDetails를 가지고 와서 User값을 바꿔서 넣어준다.
 		principalDetails.setUser(userEntity);
